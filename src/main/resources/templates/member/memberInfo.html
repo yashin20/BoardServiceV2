@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Information</title>
+</head>
+<body>
+<!--header-->
+<header th:replace="~{fragments/header :: header}"></header>
+
+
+<div class="container">
+    <h2>User Information Page</h2>
+
+    <div>
+        <label>Username : </label>
+        <span th:text="${memberInfo.username}">Username</span>
+    </div>
+
+    <div>
+        <label>E-mail : </label>
+        <span th:text="${memberInfo.email}">E-mail</span>
+    </div>
+
+    <div>
+        <label>Nickname : </label>
+        <span th:text="${memberInfo.nickname}">Nickname</span>
+    </div>
+
+    <div>
+        <label>Created At : </label>
+        <span th:text="${memberInfo.createdAt}">Created At</span>
+    </div>
+
+
+    <h3> 작성 게시글 </h3>
+    <div th:each="post : ${posts}">
+        <p>
+            <strong>제목 : </strong>
+            <a th:href="@{/post/{postId}(postId=${post.postId})}" th:text="${post.title}">게시글 제목</a><br>
+        </p>
+    </div>
+
+    <!--    작성한 게시글이 없는 경우 메시지-->
+    <div th:if="${#lists.isEmpty(posts)}">작성한 게시글이 없습니다.</div>
+
+<!--
+    <div>
+        <button class="delete-member"
+                th:attr="data-id=${member.id}">회원 탈퇴</button>
+    </div>
+    -->
+</div>
+
+
+<!--footer-->
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

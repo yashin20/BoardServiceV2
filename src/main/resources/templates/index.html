@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Board Service V2</title>
+</head>
+<body>
+<!--header-->
+<header th:replace="~{fragments/header :: header}"></header>
+
+<h1> Board Service </h1>
+
+    <!--게시글 목록-->
+    <h1>게시글 목록</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>작성일자</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="post : ${postList}">
+            <td th:text="${post.postId}">1</td>
+            <td>
+                <a th:href="@{|/post/${post.postId}|}" th:text="${post.title}">제목</a>
+            </td>
+            <td th:text="${post.member}">작성자</td>
+            <td th:text="${post.view}">조회수</td>
+            <td th:text="${post.createdAt}">작성일자</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div>
+        <!-- 페이지네이션 링크 -->
+        <ul>
+            <!-- '이전' 링크 (currentBlock > 0 이면 활성화) -->
+            <li th:if="${currentBlock > 0}">
+                <a th:href="@{/(page=${startPage - 1})}">이전</a>
+            </li>
+            <!-- 페이지 번호 링크 -->
+            <li th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
+                <a th:href="@{/(page=${pageNum})}" th:text="${pageNum}">1</a>
+            </li>
+            <!-- '다음' 링크 (endPage < totalPage 이면 활성화) -->
+            <li th:if="${endPage < page.totalPages}">
+                <a th:href="@{/(page=${endPage + 1})}">다음</a>
+            </li>
+        </ul>
+    </div>
+
+
+<!--footer-->
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>Header Fragment</title>
+</head>
+<body>
+    <header th:fragment="header">
+        <a th:href="@{/}"> Home </a>
+
+        <!--로그인한 사용자에게만 보이는 내용-->
+        <div sec:authorize="isAuthenticated()">
+            <form id="member-message">
+                Welcome, <span sec:authentication="name">User</span>!
+            </form>
+            <a th:href="@{/member/private/userInfo}"> User Info </a>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit"> Logout </button>
+            </form>
+        </div>
+
+        <!--로그인하지 않은 사용자에게만 보이는 내용-->
+        <div sec:authorize="isAnonymous()">
+            <form id="guest-message">
+                Hello, <span>Guest</span>!
+            </form>
+            <a th:href="@{/member/login}"> Login </a>
+            <a th:href="@{/member/new}"> Sign In </a>
+        </div>
+    </header>
+</body>
+
+</html>

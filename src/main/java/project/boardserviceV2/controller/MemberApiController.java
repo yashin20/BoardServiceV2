@@ -40,7 +40,6 @@ public class MemberApiController {
     public ResponseEntity<?> memberInfo(@PathVariable Long memberId) {
         Member member = memberService.findMemberById(memberId);
         return ResponseEntity.ok(member);
-
     }
 
 

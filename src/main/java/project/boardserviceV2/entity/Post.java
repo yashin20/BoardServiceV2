@@ -2,13 +2,16 @@ package project.boardserviceV2.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor // initMember 때문에
 public class Post extends BaseEntity{
 
     /**
@@ -39,4 +42,12 @@ public class Post extends BaseEntity{
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>(); //댓글 목록
+
+    public Post(String title, String content, Member member) {
+        this.title = title;
+        this.content = content;
+        this.member = member;
+        this.setCreatedAt(LocalDateTime.now());
+        this.setUpdatedAt(LocalDateTime.now());
+    }
 }
