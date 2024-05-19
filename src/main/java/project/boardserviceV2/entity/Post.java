@@ -52,4 +52,9 @@ public class Post extends BaseEntity{
         this.setCreatedAt(LocalDateTime.now());
         this.setUpdatedAt(LocalDateTime.now());
     }
+
+    //조회수 증가
+    public void incrementView() {
+        this.view += 1;
+    }
 }

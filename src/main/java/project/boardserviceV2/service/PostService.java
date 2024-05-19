@@ -69,13 +69,19 @@ public class PostService {
     /**
      * 게시글 상세 정보 (return PostInfoDto)
      */
+    @Transactional //조회수 증가
     public PostInfoDto getPostInfo(Long postId) {
+
+        //1. Post 찾기
         Optional<Post> findPost = postRepository.findById(postId);
         if (!findPost.isPresent()) {
             throw new DataNotFoundException("존재하지 않는 게시글 입니다.");
         }
-
         Post post = findPost.get();
+
+        //2. 조회수 증가
+        post.incrementView();
+
         return new PostInfoDto(post);
     }
 
