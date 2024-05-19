@@ -1,11 +1,14 @@
 package project.boardserviceV2.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comment extends BaseEntity{
 
     /**
@@ -25,7 +28,6 @@ public class Comment extends BaseEntity{
 
     private String content;
 
-
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
@@ -34,4 +36,19 @@ public class Comment extends BaseEntity{
     @JoinColumn(name = "post_id")
     private Post post;
 
+
+    //생성자
+    public Comment(String content, Member member, Post post) {
+        this.content = content;
+        this.member = member;
+        this.post = post;
+        this.setCreatedAt(LocalDateTime.now());
+        this.setUpdatedAt(LocalDateTime.now());
+    }
+
+    //수정을 위한 Setter
+    public void update(String content) {
+        this.content = content; //내용 수정
+        this.setUpdatedAt(LocalDateTime.now()); //수정 시간 갱신
+    }
 }

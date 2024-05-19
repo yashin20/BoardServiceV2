@@ -80,7 +80,7 @@ public class WebSecurityConfig {
                 .logout(logout ->
                         logout
                                 .logoutUrl("/logout") //로그아웃 처리 URL
-                                .logoutSuccessUrl("/login?logout") //로그아웃 성공 후 리다이렉트 할 URL
+                                .logoutSuccessUrl("/") //로그아웃 성공 후 리다이렉트 할 URL
                                 .invalidateHttpSession(true)
                                 .deleteCookies("JSESSIONID")
                                 .permitAll()

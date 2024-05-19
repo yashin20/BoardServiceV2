@@ -34,13 +34,15 @@ public class Post extends BaseEntity{
     private String title;
     private String content;
 
-    private Integer view = 0;
+    private Integer view = 0; //조회수 - 기본값 : 0 설정
 
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member; //작성자
 
-    @OneToMany(mappedBy = "post")
+    // 게시글 삭제 시 - 해당 게시글의 댓글도 삭제
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("id asc")
     private List<Comment> comments = new ArrayList<>(); //댓글 목록
 
     public Post(String title, String content, Member member) {

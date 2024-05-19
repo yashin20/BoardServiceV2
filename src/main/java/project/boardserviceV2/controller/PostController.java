@@ -7,11 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import project.boardserviceV2.dto.CreatePostDto;
-import project.boardserviceV2.dto.PostInfoDto;
-import project.boardserviceV2.dto.UpdatePostDto;
+import project.boardserviceV2.dto.*;
+import project.boardserviceV2.entity.Comment;
 import project.boardserviceV2.entity.Member;
 import project.boardserviceV2.entity.Post;
+import project.boardserviceV2.service.CommentService;
 import project.boardserviceV2.service.MemberService;
 import project.boardserviceV2.service.PostService;
 
@@ -26,6 +26,7 @@ public class PostController {
 
     private final PostService postService;
     private final MemberService memberService;
+    private final CommentService commentService;
 
     /**
      * 게시글 상세 정보 (+ 댓글)
@@ -33,9 +34,39 @@ public class PostController {
     @GetMapping("/{postId}")
     public String getPost(@PathVariable Long postId, Model model) {
         PostInfoDto postInfo = postService.getPostInfo(postId);
+
+        //Post - 게시글 상세 정보
         model.addAttribute("postInfo", postInfo);
+
+        //Comments - 댓글 리스트
+        List<CommentResponseDto> comments = commentService.getComments(postService.findPostById(postId));
+        model.addAttribute("comments", comments);
+
+        //Create Comment - 댓글 작성 폼
+        model.addAttribute("commentRequestDto", new CommentRequestDto());
+
         return "post/postInfo";
     }
+
+    /**
+     * 댓글 저장을 위한 Post 요청
+     */
+    @PostMapping("/{postId}")
+    public String createComment(@PathVariable Long postId, @ModelAttribute CommentRequestDto dto,
+                                Model model, Authentication authentication) {
+        //dto 완성
+        Post post = postService.findPostById(postId); //작성 게시글
+        Member member = memberService.findMemberByUsername(authentication.getName()); //작성자
+        dto.setPost(post);
+        dto.setMember(member);
+
+        //댓글 저장
+        commentService.createComment(dto);
+
+        return "redirect:/post/{postId}";
+    }
+
+
 
     /**
      * 게시글 작성
@@ -67,6 +98,7 @@ public class PostController {
 
         return "redirect:/";
     }
+
 
 
     /**
@@ -106,6 +138,7 @@ public class PostController {
         postService.updatePost(postId, updatePostDto);
         return "redirect:/";
     }
+
 
 
     /**
