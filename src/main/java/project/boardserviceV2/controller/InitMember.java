@@ -37,6 +37,12 @@ public class InitMember {
 
         @Transactional
         public void init() {
+            //회원 삭제를 대비한 "알수없음" 회원
+            Member unknown = new Member("unknown", "12345678",
+                    "unknown","unknown@unknown");
+            em.persist(unknown);
+
+
             // User 100ea
             for (int i = 1; i <= 10; i++) {
                 Member member = new Member("Member" + i, "12345678",
@@ -46,9 +52,6 @@ public class InitMember {
 
             Member member1 = new Member("Member17", "12345678", "Mem17", "exam@exam.com");
             em.persist(member1);
-
-            Member member2 = new Member("Member17", "12345678", "Mem17", "exam@exam.com");
-            em.persist(member2);
 
 
             Post post1 = new Post();
@@ -73,7 +76,7 @@ public class InitMember {
                 Post post = new Post();
                 post.setTitle("title" + i);
                 post.setContent("this is content" + i);
-                post.setMember(member2);
+                post.setMember(member1);
                 post.setCreatedAt(LocalDateTime.of(2024,5,(i%30)+1,10,0));
                 post.setUpdatedAt(LocalDateTime.now());
                 post.setView(0);

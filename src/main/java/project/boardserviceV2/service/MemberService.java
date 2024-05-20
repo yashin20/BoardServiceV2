@@ -23,6 +23,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PostService postService;
 
     /**
      * 회원가입
@@ -120,20 +121,24 @@ public class MemberService {
             throw new UnauthorizedAccessException("접근 권한이 없습니다.");
         }
 
+        //2. 해당 회원의 게시글 작성자를 '알수없음' 으로 변경
+        postService.updatePostMemberToUnknown(memberId);
+
         //2. 회원 삭제
         memberRepository.delete(member);
         return memberId;
     }
 
 
+
     /**
      * 회원 정보 수정
      * @param memberId : 수정 회원 ID
-     * @param updateMemberDto : 수정 정보 - nickname, password
+     * @param dto : 수정 정보 - nickname, password
      * @return : 수정된 회원
      */
     @Transactional
-    public Member updateMember(Long memberId, UpdateMemberDto updateMemberDto) {
+    public Member updateMember(Long memberId, UpdateMemberDto dto) {
         //1. 수정 대상 찾기
         Optional<Member> findMember = memberRepository.findById(memberId);
 
@@ -150,9 +155,9 @@ public class MemberService {
             throw new UnauthorizedAccessException("접근 권한이 없습니다.");
         }
 
-        //회원 정보 수정
-        member.setNickname(updateMemberDto.getNickname());
-        member.setPassword(passwordEncoder.encode(updateMemberDto.getPassword()));
+        //회원 정보 수정 (nickname, password)
+        member.updateMemberInfo(dto.getNickname(),
+                                passwordEncoder.encode(dto.getPassword()));
 
         //수정일자 업데이트
         member.setUpdatedAt(LocalDateTime.now());

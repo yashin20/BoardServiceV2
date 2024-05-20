@@ -14,6 +14,7 @@ import project.boardserviceV2.dto.UpdatePostDto;
 import project.boardserviceV2.entity.Member;
 import project.boardserviceV2.entity.Post;
 import project.boardserviceV2.exception.DataNotFoundException;
+import project.boardserviceV2.repository.MemberRepository;
 import project.boardserviceV2.repository.PostRepository;
 
 
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final MemberRepository memberRepository;
 
     /**
      * 게시글 생성
@@ -115,5 +117,12 @@ public class PostService {
 
         postRepository.delete(findPost.get());
         return postId;
+    }
+
+    // 작성자 -> unknown 객체
+    @Transactional
+    public void updatePostMemberToUnknown(Long memberId) {
+        Member unknownMember = memberRepository.findByUsername("unknown").get();
+        postRepository.updateMemberToUnknownByMemberId(memberId, unknownMember);
     }
 }

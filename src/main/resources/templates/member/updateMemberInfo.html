@@ -12,25 +12,37 @@
 <div class="container">
     <h2>User Information Page</h2>
 
-    <div>
-        <label>Username : </label>
-        <span th:text="${memberInfo.username}">Username</span>
-    </div>
+    <form th:action="@{/member/private/userInfo/update}" th:object="${updateForm}" method="post">
+        <div>
+            <label>Username : </label>
+            <span th:text="${memberInfo.username}">Username</span>
+        </div>
 
-    <div>
-        <label>E-mail : </label>
-        <span th:text="${memberInfo.email}">E-mail</span>
-    </div>
+        <div>
+            <label for="password">비밀번호: </label>
+            <input type="password" id="password" th:field="*{password}" required>
+        </div>
 
-    <div>
-        <label>Nickname : </label>
-        <span th:text="${memberInfo.nickname}">Nickname</span>
-    </div>
+        <div>
+            <label>E-mail : </label>
+            <span th:text="${memberInfo.email}">E-mail</span>
+        </div>
 
-    <div>
-        <label>Created At : </label>
-        <span th:text="${memberInfo.createdAt}">Created At</span>
-    </div>
+
+        <div>
+            <label for="nickname">닉네임: </label>
+            <input type="text" id="nickname" th:value="${memberInfo.nickname}" th:field="*{nickname}" required>
+        </div>
+
+        <div>
+            <label>Created At : </label>
+            <span th:text="${memberInfo.createdAt}">Created At</span>
+        </div>
+
+        <div>
+            <button type="submit">생성</button>
+        </div>
+    </form>
 
 
     <h3> 작성 게시글 </h3>
@@ -49,11 +61,6 @@
     <div th:if="${#lists.isEmpty(posts)}">작성한 게시글이 없습니다.</div>
 
 
-    <div>
-        <a class="update-member"
-                th:href="@{/member/private/userInfo/update}"
-                th:attr="data-id=${memberInfo.id}">회원 정보 수정</a>
-    </div>
     <div>
         <button class="delete-member"
                 th:attr="data-id=${memberInfo.id}"

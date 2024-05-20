@@ -2,6 +2,7 @@ package project.boardserviceV2.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import project.boardserviceV2.dto.UpdateMemberDto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -62,7 +63,6 @@ public class Member extends BaseEntity{
     }
 
 
-
     //회원가입 API 를 위한 생성자
     public Member(Long id, String username, String password, String nickname, String email) {
         this.id = id;
@@ -73,5 +73,11 @@ public class Member extends BaseEntity{
         this.userRole = UserRole.USER; //권한 - USER
         this.setCreatedAt(LocalDateTime.now()); //생성일자 - 현재
         this.setUpdatedAt(LocalDateTime.now()); //수정일자 - 현재
+    }
+
+    //updateMember 를 위한 Setter
+    public void updateMemberInfo(String nickname, String password) {
+        this.nickname = nickname;
+        this.password = password;
     }
 }

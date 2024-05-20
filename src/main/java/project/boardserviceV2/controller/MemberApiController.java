@@ -1,13 +1,18 @@
 package project.boardserviceV2.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 import project.boardserviceV2.dto.CreateMemberDto;
 import project.boardserviceV2.dto.UpdateMemberDto;
 import project.boardserviceV2.entity.Member;
 import project.boardserviceV2.service.MemberService;
+import project.boardserviceV2.service.PostService;
 
 @RestController
 @RequestMapping("/api/members")
@@ -15,6 +20,7 @@ import project.boardserviceV2.service.MemberService;
 public class MemberApiController {
 
     private final MemberService memberService;
+    private final PostService postService;
 
 
     /**
@@ -64,8 +70,24 @@ public class MemberApiController {
      * @return : 삭제 회원 ID
      */
     @DeleteMapping("/{memberId}")
-    public ResponseEntity<?> deleteMember(@PathVariable Long memberId) {
+    public ResponseEntity<?> deleteMember(@PathVariable Long memberId,
+                                          HttpServletRequest request, HttpServletResponse response) {
+
+        //1. 회원이 작성한 게시글의 작성자명을 '알수없음'으로 변경
+        postService.updatePostMemberToUnknown(memberId);
+
+        //2. 회원 삭제
         Long deleteMemberId = memberService.deleteMember(memberId);
-        return ResponseEntity.ok(deleteMemberId);
+
+        //3. 로그아웃 처리
+        logoutUser(request, response);
+
+        return ResponseEntity.ok("회원" + deleteMemberId + "이(가) 탈퇴 되었습니다.");
+    }
+
+    // 회원 로그아웃 (세션 정리를 통한)
+    private void logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response, null);
+        SecurityContextHolder.clearContext(); //세션을 정리
     }
 }
