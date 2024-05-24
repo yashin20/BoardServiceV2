@@ -12,7 +12,11 @@ import project.boardserviceV2.entity.Post;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
+    // Post 전체 검색 (페이징)
     Page<Post> findAll(Pageable pageable);
+
+    // Post Title 검색 (페이징)
+    Page<Post> findByTitleContaining(String searchKeyword, Pageable pageable);
 
     //작성자 : member -> unknown
     @Modifying

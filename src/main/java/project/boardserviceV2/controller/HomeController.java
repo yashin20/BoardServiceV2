@@ -4,13 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.boardserviceV2.dto.PostInfoDto;
+import project.boardserviceV2.entity.Post;
 import project.boardserviceV2.service.PostService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -19,31 +24,59 @@ public class HomeController {
 
     private final PostService postService;
 
+    /**
+     * 게시글 페이징 요청 (검색, 정렬 조건)
+     * @param pageable : 페이징 조건
+     * @param keyword : 검색 키워드
+     * @param sort : 정렬 여부 (required = false -> 필수 파라미터가 아님)
+     * @param model
+     * @return
+     */
+
     @GetMapping("/")
-    public String home(@PageableDefault(page = 1) Pageable pageable, Model model) {
-        // pageable.getPageNumber()는 1부터 시작하도록 설정
-        int currentPage = pageable.getPageNumber() - 1; // Spring Data JPA의 0 기반 페이지 인덱스로 조정
-        Page<PostInfoDto> posts = postService.getPostList(PageRequest.of(currentPage, pageable.getPageSize(), pageable.getSort()));
+    public String home(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                       @RequestParam(value = "keyword", required = false) String keyword,
+                       @RequestParam(value = "sort", required = false) String sort,
+                       Model model) {
 
-        model.addAttribute("postList", posts.getContent());
-        model.addAttribute("page", posts);
+        //정렬 조건 설정
+        if ("views".equals(sort)) {
+            pageable  = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "view"));
+        } else if ("createdAt".equals(sort)) {
+            pageable  = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "createdAt"));
+        }
 
-        /**
-         * 마지막 페이지 : 21 (사용자 기준)
-         * 사용자 기준 페이지 : 15
-         * 서버 기준 currentPage : 14
-         * blockLimit : 5
-         * currentBlock : 14 / 5 = 2 (블록 2)
-         * startPage : 2 * 5 + 1 = 11 (사용자 기준 : 1부터 시작)
-         * endPage : min((2 + 1) * 5, 21) = 15 (사용자 기준)
+        //검색 조건 설정
+        Page<Post> list = (keyword != null && !keyword.isEmpty())
+                            ? postService.search(keyword, pageable)
+                            : postService.pageList(pageable);
+        Page<PostInfoDto> posts = list.map(PostInfoDto::new);
+
+
+        model.addAttribute("posts", posts);
+        model.addAttribute("sort", sort); //정렬 방식
+        model.addAttribute("keyword", keyword); //검색 키워드
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber()); //이전 페이지 정보
+        model.addAttribute("next", pageable.next().getPageNumber()); //다음 페이지 정보
+        model.addAttribute("hasPrevious", list.hasPrevious()); //이전 페이지 존재 여부
+        model.addAttribute("hasNext", list.hasNext()); //다음 페이지 존재 여부
+
+
+        /** 페이지 블록 계산
+         * currentPage = 5
+         * User : 5 , Spring : 4
+         * startPage = 1
+         * endPage = 5
+         * <= 1 2 3 4 5 =>
          */
+        int currentPage = pageable.getPageNumber() + 1; //현재 페이지 정보(User side)
+        model.addAttribute("current", currentPage);
 
-        int blockLimit = 5; //페이지 개수 설정 (5)
-        int currentBlock = currentPage / blockLimit; //현재 페이지가 속한 페이지 블록(0 부터 시작)
-        int startPage = currentBlock * blockLimit + 1; //블록 시작 페이지 (사용자 기준)
-        int endPage = Math.min((currentBlock + 1) * blockLimit, posts.getTotalPages()); // 블록의 끝 페이지 (사용자 기준)
+        int blockSize = 5;
+        int startPage = ((currentPage - 1) / blockSize) * blockSize + 1; //블럭 시작 페이지
+        int endPage = Math.min(startPage + blockSize - 1, list.getTotalPages()); //블럭 마지막 페이지
 
-        model.addAttribute("currentBlock", currentBlock);
+
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 

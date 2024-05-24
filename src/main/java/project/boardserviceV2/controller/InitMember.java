@@ -37,7 +37,9 @@ public class InitMember {
 
         @Transactional
         public void init() {
-            //회원 삭제를 대비한 "알수없음" 회원
+            /**
+             * !!회원 삭제를 대비한 "알수없음" 회원!! (필수)
+             */
             Member unknown = new Member("unknown", "12345678",
                     "unknown","unknown@unknown");
             em.persist(unknown);

@@ -4,10 +4,7 @@ package project.boardserviceV2.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.boardserviceV2.service.PostService;
 
 @RestController
@@ -31,4 +28,11 @@ public class PostApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제 실패");
         }
     }
+
+    /**
+     * 게시글 검색
+    @GetMapping("/search")
+    public ResponseEntity<?> searchPost() {
+
+    }*/
 }

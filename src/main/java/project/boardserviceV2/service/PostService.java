@@ -43,16 +43,13 @@ public class PostService {
     }
 
     /**
-     * 게시글 목록 (return PostInfoDto)
+     * 게시글 목록
      */
-    public Page<PostInfoDto> getPostList(Pageable pageable) {
-        int page = pageable.getPageNumber(); //현재 페이지 (페이지는 0 부터 시작)
-        int size = 10; //페이지 당 보여줄 게시글 수
-
-        Page<Post> posts = postRepository.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
-
-        return posts.map(post -> new PostInfoDto(post));
+    public Page<Post> pageList(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
+
+
 
 
     /**
@@ -122,7 +119,19 @@ public class PostService {
     // 작성자 -> unknown 객체
     @Transactional
     public void updatePostMemberToUnknown(Long memberId) {
+
         Member unknownMember = memberRepository.findByUsername("unknown").get();
         postRepository.updateMemberToUnknownByMemberId(memberId, unknownMember);
     }
+
+
+    /**
+     * 게시글 제목 검색
+     */
+    public Page<Post> search(String searchKeyword, Pageable pageable) {
+
+        return postRepository.findByTitleContaining(searchKeyword, pageable);
+    }
+
+
 }

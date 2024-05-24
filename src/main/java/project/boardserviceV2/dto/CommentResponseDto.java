@@ -2,8 +2,6 @@ package project.boardserviceV2.dto;
 
 import lombok.Data;
 import project.boardserviceV2.entity.Comment;
-import project.boardserviceV2.entity.Member;
-import project.boardserviceV2.entity.Post;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +22,8 @@ public class CommentResponseDto {
     private String username; //작성자 검증
     private String nickname; //작성자 표시
 
+    private Boolean isEdited = false; //댓글의 수정됨 여부 (기본값 false)
+
 
 
     //Entity -> Dto
@@ -37,5 +37,10 @@ public class CommentResponseDto {
 
         this.username = entity.getMember().getUsername();
         this.nickname = entity.getMember().getNickname();
+
+        //Comment 의 수정됨 여부를 체크
+        if (entity.getUpdatedAt() != null && !entity.getUpdatedAt().isEqual(entity.getCreatedAt())) {
+            this.isEdited = true;
+        }
     }
 }
