@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import project.boardserviceV2.dto.*;
 import project.boardserviceV2.entity.Member;
+import project.boardserviceV2.exception.DataAlreadyExistsException;
 import project.boardserviceV2.service.MemberService;
 
 import java.security.Principal;
@@ -47,9 +48,18 @@ public class MemberController {
             return "member/createMember";
         }
 
-        //회원가입
-        memberService.join(createMemberDto);
+        try {
+            //회원가입
+            memberService.join(createMemberDto);
+        } catch (DataAlreadyExistsException ex) {
+            //중복 검사 예외 처리
+            bindingResult.reject("error.createMemberDto", ex.getMessage());
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "member/createMember";
+        }
+
         return "redirect:/";
+
     }
 
     /**
@@ -106,7 +116,9 @@ public class MemberController {
         model.addAttribute("posts", posts);
 
         //Update Form 넘기기
-        model.addAttribute("updateForm", new UpdateMemberDto());
+        UpdateMemberDto updateMemberDto = new UpdateMemberDto();
+        updateMemberDto.setNickname(member.getNickname()); //기존 nickname
+        model.addAttribute("updateMemberDto", updateMemberDto);
 
         return "member/updateMemberInfo";
     }
@@ -117,6 +129,7 @@ public class MemberController {
         String loginUsername = authentication.getName(); //로그인한 회원 - username
         // 회원 정보
         Member member = memberService.findMemberByUsername(loginUsername); //로그인한 회원
+        model.addAttribute("memberInfo", new MemberResponseDto(member));
 
         //*예외처리 : UpdateMemberDto 조건 만족
         if (bindingResult.hasErrors()) {
@@ -128,7 +141,17 @@ public class MemberController {
             return "member/updateMemberInfo";
         }
 
-        memberService.updateMember(member.getId(), dto);
+
+        try {
+            //회원가입
+            memberService.updateMember(member.getId(), dto);
+        } catch (DataAlreadyExistsException ex) {
+            //중복 검사 예외 처리
+            bindingResult.reject("error.dto", ex.getMessage());
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "member/updateMemberInfo";
+        }
+
         return "redirect:/";
     }
 }

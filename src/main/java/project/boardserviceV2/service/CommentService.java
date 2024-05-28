@@ -7,10 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import project.boardserviceV2.dto.CommentRequestDto;
 import project.boardserviceV2.dto.CommentResponseDto;
 import project.boardserviceV2.entity.Comment;
+import project.boardserviceV2.entity.Member;
 import project.boardserviceV2.entity.Post;
 import project.boardserviceV2.exception.DataNotFoundException;
 import project.boardserviceV2.exception.UnauthorizedAccessException;
 import project.boardserviceV2.repository.CommentRepository;
+import project.boardserviceV2.repository.MemberRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final MemberRepository memberRepository; // 작성자 -> unknown (회원 탈퇴)
 
 
     /**
@@ -107,4 +110,14 @@ public class CommentService {
         return commentId;
     }
 
+
+    /**
+     * 회원 삭제 시, 작성한 Comment 의 작성자를 unknown 으로 변경
+     */
+    // 작성자 -> unknown 객체
+    @Transactional
+    public void updateCommentMemberToUnknown(Long memberId) {
+        Member unknownMember = memberRepository.findByUsername("unknown").get();
+        commentRepository.updateMemberToUnknownByMemberId(memberId, unknownMember);
+    }
 }

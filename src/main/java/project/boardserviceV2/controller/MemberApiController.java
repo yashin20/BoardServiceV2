@@ -73,13 +73,10 @@ public class MemberApiController {
     public ResponseEntity<?> deleteMember(@PathVariable Long memberId,
                                           HttpServletRequest request, HttpServletResponse response) {
 
-        //1. 회원이 작성한 게시글의 작성자명을 '알수없음'으로 변경
-        postService.updatePostMemberToUnknown(memberId);
-
-        //2. 회원 삭제
+        //1. 회원 삭제
         Long deleteMemberId = memberService.deleteMember(memberId);
 
-        //3. 로그아웃 처리
+        //2. 로그아웃 처리
         logoutUser(request, response);
 
         return ResponseEntity.ok("회원" + deleteMemberId + "이(가) 탈퇴 되었습니다.");

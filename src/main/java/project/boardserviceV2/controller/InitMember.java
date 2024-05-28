@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import project.boardserviceV2.entity.Comment;
 import project.boardserviceV2.entity.Member;
 import project.boardserviceV2.entity.Post;
 
@@ -40,50 +41,40 @@ public class InitMember {
             /**
              * !!회원 삭제를 대비한 "알수없음" 회원!! (필수)
              */
-            Member unknown = new Member("unknown", "12345678",
+            Member unknown = new Member("unknown", passwordEncoder.encode("12345678"),
                     "unknown","unknown@unknown");
             em.persist(unknown);
 
 
-            // User 100ea
+            /**
+             * Test Data
+             * User 10ea (Member1 ~ Member10)
+             * + Post 100ea (Member 당 10개)
+             * + Comment 400ea (Post 당 4개)
+             */
+
+            //User 10ea (Member1 ~ Member10)
             for (int i = 1; i <= 10; i++) {
-                Member member = new Member("Member" + i, "12345678",
+                Member member = new Member("Member" + i, passwordEncoder.encode("12345678"),
                         "Mem" + i ,"Member" + i + "@example.ac.kr");
                 em.persist(member);
+
+                //Post 100ea (Member 당 10개)
+                for (int j = 1; j <= 10; j++) {
+                    Post post = new Post("Post" + j + " by: Member" + i, "content" + j, member);
+                    em.persist(post);
+
+                    // Comment 250ea (Post 당 4개)
+                    for (int k = 1; k <= 4; k++) {
+                        Comment comment = new Comment("Comment" + k + " - belong to Post" + j + " write by Member" + i,
+                                member, post);
+                        em.persist(comment);
+                    }
+                }
             }
 
-            Member member1 = new Member("Member17", "12345678", "Mem17", "exam@exam.com");
+            Member member1 = new Member("Member77", passwordEncoder.encode("12345678"), "Mem77", "exam@exam.com");
             em.persist(member1);
-
-
-            Post post1 = new Post();
-            post1.setTitle("comment test");
-            post1.setContent("this is comment test!");
-            post1.setMember(member1);
-            post1.setCreatedAt(LocalDateTime.now());
-            post1.setUpdatedAt(LocalDateTime.now());
-            post1.setView(10);
-            em.persist(post1);
-
-            Post post2 = new Post();
-            post2.setTitle("comment test2");
-            post2.setContent("this is comment test!2");
-            post2.setMember(member1);
-            post2.setCreatedAt(LocalDateTime.of(2024,5,10,10,0));
-            post2.setUpdatedAt(LocalDateTime.now());
-            post2.setView(20);
-            em.persist(post2);
-
-            for (int i = 1; i <= 100; i++) {
-                Post post = new Post();
-                post.setTitle("title" + i);
-                post.setContent("this is content" + i);
-                post.setMember(member1);
-                post.setCreatedAt(LocalDateTime.of(2024,5,(i%30)+1,10,0));
-                post.setUpdatedAt(LocalDateTime.now());
-                post.setView(0);
-                em.persist(post);
-            }
         }
     }
 }

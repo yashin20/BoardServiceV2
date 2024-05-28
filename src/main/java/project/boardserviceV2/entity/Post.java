@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor // initMember 때문에
 @ToString
 public class Post extends BaseEntity{
@@ -47,11 +47,19 @@ public class Post extends BaseEntity{
     @OrderBy("id asc")
     private List<Comment> comments = new ArrayList<>(); //댓글 목록
 
+    // Post 생성자
     public Post(String title, String content, Member member) {
         this.title = title;
         this.content = content;
         this.member = member;
         this.setCreatedAt(LocalDateTime.now());
+        this.setUpdatedAt(LocalDateTime.now());
+    }
+
+    //Post 수정을 위한 함수
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
         this.setUpdatedAt(LocalDateTime.now());
     }
 

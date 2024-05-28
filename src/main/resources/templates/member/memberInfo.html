@@ -56,7 +56,7 @@
             <td><a th:href="@{/post/{postId}(postId=${post.postId})}" th:text="${post.title}">게시글 제목</a></td>
             <td> <!--삭제 버튼-->
                 <button th:if="${post.username} == ${#authentication.name}"
-                        class="delete-comment"
+                        class="btn btn-danger"
                         th:data-id="${post.postId}"
                         onclick="deletePost(this.getAttribute('data-id'))">삭제</button>
             </td>
@@ -67,12 +67,12 @@
 
 
     <div>
-        <a class="update-member"
+        <a class="btn btn-success"
                 th:href="@{/member/private/userInfo/update}"
                 th:attr="data-id=${memberInfo.id}">회원 정보 수정</a>
     </div>
     <div>
-        <button class="delete-member"
+        <button class="btn btn-danger"
                 th:attr="data-id=${memberInfo.id}"
                 onclick="deleteMember(this.getAttribute('data-id'))">회원 탈퇴</button>
     </div>

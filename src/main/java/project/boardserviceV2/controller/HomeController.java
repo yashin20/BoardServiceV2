@@ -34,7 +34,7 @@ public class HomeController {
      */
 
     @GetMapping("/")
-    public String home(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+    public String home(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                        @RequestParam(value = "keyword", required = false) String keyword,
                        @RequestParam(value = "sort", required = false) String sort,
                        Model model) {

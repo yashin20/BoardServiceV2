@@ -16,22 +16,23 @@
     <div class="container">
         <h2>Create User Page</h2>
 
+
         <form class="form-floating" th:action="@{/member/new}" th:object="${createMemberDto}" method="post">
             <div class="form-floating mb-3">
-                <label for="username"> username </label>
                 <input type="text" class="form-control" id="username" th:field="*{username}" required>
+                <label for="username"> username </label>
             </div>
             <div class="form-floating mb-3">
-                <label for="password"> password </label>
                 <input type="password" class="form-control" id="password" th:field="*{password}" required>
+                <label for="password"> password </label>
             </div>
             <div class="form-floating mb-3">
-                <label for="email"> email </label>
                 <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                <label for="email"> email </label>
             </div>
             <div class="form-floating mb-3">
-                <label for="nickname"> nickname </label>
                 <input type="text" class="form-control" id="nickname" th:field="*{nickname}" required>
+                <label for="nickname"> nickname </label>
             </div>
             <div>
                 <button type="submit" class="w-100 btn btn-lg btn-primary">생성</button>

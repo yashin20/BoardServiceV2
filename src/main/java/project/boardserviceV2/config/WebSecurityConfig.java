@@ -25,17 +25,19 @@ public class WebSecurityConfig {
 
 
     // PasswordEncoder Bean 등록 - password 암호화 (방식 - BCryptPasswordEncoder)
-/*
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-*/
 
+
+/*
+    // password 아무런 암호화도 걸지 않음.
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
+*/
 
     // WebSecurityCustomizer Bean 등록 - 정적 resources 접근을 위함
     @Bean
@@ -44,15 +46,6 @@ public class WebSecurityConfig {
         return (web -> web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()));
     }
-
-
-  /*  @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests(authorize -> authorize.anyRequest().permitAll())
-                .csrf(csrf -> csrf.disable()); // CSRF 보호 비활성화
-        return http.build();
-    }*/
 
 
     @Bean

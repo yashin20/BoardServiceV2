@@ -23,7 +23,10 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+
+    //회원 삭제를 위함.
     private final PostService postService;
+    private final CommentService commentService;
 
     /**
      * 회원가입
@@ -121,10 +124,12 @@ public class MemberService {
             throw new UnauthorizedAccessException("접근 권한이 없습니다.");
         }
 
-        //2. 해당 회원의 게시글 작성자를 '알수없음' 으로 변경
+        //2-1. 해당 회원의 작성한 post 의 작성자를 'unknown' 으로 변경
         postService.updatePostMemberToUnknown(memberId);
+        //2-2. 해당 회원이 작성한 comment 의 작성자를 'unknown' 으로 변경
+        commentService.updateCommentMemberToUnknown(memberId);
 
-        //2. 회원 삭제
+        //3. 회원 삭제
         memberRepository.delete(member);
         return memberId;
     }
@@ -141,13 +146,18 @@ public class MemberService {
     public Member updateMember(Long memberId, UpdateMemberDto dto) {
         //1. 수정 대상 찾기
         Optional<Member> findMember = memberRepository.findById(memberId);
-
         //*예외처리 : 존재하는 회원인가?
         if (!findMember.isPresent()) {
             throw new DataNotFoundException("존재하지 않는 회원 입니다.");
         }
-
         Member member = findMember.get(); //수정 대상
+
+        //수정 닉네임 중복 체크 (이전 닉네임과 같지 않음 && 이미 존재하는 닉네임)
+        if (!dto.getNickname().equals(member.getNickname())
+                && memberRepository.findByNickname(dto.getNickname()).isPresent()) {
+            throw new DataAlreadyExistsException("이미 존재하는 닉네임 입니다.");
+        }
+
         String loggedName = SecurityContextHolder.getContext().getAuthentication().getName(); //로그인된 username
 
         //*예외처리 : 권한 확인 - " '삭제 회원'과 '로그인 회원'이 동일한가? "

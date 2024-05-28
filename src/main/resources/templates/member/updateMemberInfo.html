@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Member Information</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
 <!--header-->
@@ -12,53 +15,71 @@
 <div class="container">
     <h2>User Information Page</h2>
 
-    <form th:action="@{/member/private/userInfo/update}" th:object="${updateForm}" method="post">
-        <div>
+    <form class="form-floating" th:action="@{/member/private/userInfo/update}" th:object="${updateMemberDto}" method="post">
+        <div class="form-floating mb-3">
+            <span class="form-control" th:text="${memberInfo.username}">Username</span>
             <label>Username : </label>
-            <span th:text="${memberInfo.username}">Username</span>
         </div>
 
-        <div>
+        <div class="form-floating mb-3">
+            <input type="password" id="password" class="form-control" th:field="*{password}" required>
             <label for="password">비밀번호: </label>
-            <input type="password" id="password" th:field="*{password}" required>
         </div>
 
-        <div>
+        <div class="form-floating mb-3">
+            <span class="form-control" th:text="${memberInfo.email}">E-mail</span>
             <label>E-mail : </label>
-            <span th:text="${memberInfo.email}">E-mail</span>
         </div>
 
 
-        <div>
+        <div class="form-floating mb-3">
+            <input type="text" id="nickname" class="form-control" th:field="*{nickname}" required>
             <label for="nickname">닉네임: </label>
-            <input type="text" id="nickname" th:value="${memberInfo.nickname}" th:field="*{nickname}" required>
         </div>
 
-        <div>
+        <div class="form-floating mb-3">
+            <span class="form-control" th:text="${memberInfo.createdAt}">Created At</span>
             <label>Created At : </label>
-            <span th:text="${memberInfo.createdAt}">Created At</span>
         </div>
 
         <div>
-            <button type="submit">생성</button>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">생성</button>
         </div>
     </form>
 
-
-    <h3> 작성 게시글 </h3>
-    <div th:each="post : ${posts}">
-        <p>
-            <strong>제목 : </strong>
-            <a th:href="@{/post/{postId}(postId=${post.postId})}" th:text="${post.title}">게시글 제목</a><br>
-        </p>
-        <button th:if="${post.username} == ${#authentication.name}"
-                class="delete-comment"
-                th:data-id="${post.postId}"
-                onclick="deletePost(this.getAttribute('data-id'))">삭제</button>
+    <!-- 에러 메시지 표시 부분 -->
+    <div th:if="${errorMessage}" style="color: red;">
+        <p th:text="${errorMessage}"></p>
     </div>
 
+
+    <h3> 작성 게시글 </h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>제목</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="post : ${posts}">
+            <td>#</td>
+            <td><a th:href="@{/post/{postId}(postId=${post.postId})}" th:text="${post.title}">게시글 제목</a></td>
+            <td> <!--삭제 버튼-->
+                <button th:if="${post.username} == ${#authentication.name}"
+                        class="delete-comment"
+                        th:data-id="${post.postId}"
+                        onclick="deletePost(this.getAttribute('data-id'))">삭제</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     <!--    작성한 게시글이 없는 경우 메시지-->
     <div th:if="${#lists.isEmpty(posts)}">작성한 게시글이 없습니다.</div>
+
+
 
 
     <div>
@@ -66,6 +87,7 @@
                 th:attr="data-id=${memberInfo.id}"
                 onclick="deleteMember(this.getAttribute('data-id'))">회원 탈퇴</button>
     </div>
+
 </div>
 
 
@@ -73,6 +95,8 @@
 <div th:replace="~{fragments/footer :: footer}"></div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="/main.js"></script>
 </body>
 </html>

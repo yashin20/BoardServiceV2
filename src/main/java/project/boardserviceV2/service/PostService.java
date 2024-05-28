@@ -95,10 +95,7 @@ public class PostService {
         }
 
         Post post = findPost.get();
-        post.setTitle(updatePostDto.getTitle());
-        post.setContent(updatePostDto.getContent());
-        post.setUpdatedAt(LocalDateTime.now());
-
+        post.update(updatePostDto.getTitle(), updatePostDto.getContent());
         return post;
     }
 
@@ -116,10 +113,13 @@ public class PostService {
         return postId;
     }
 
+
+    /**
+     * 회원 삭제 시, 작성한 Post 의 작성자를 unknown 으로 변경
+     */
     // 작성자 -> unknown 객체
     @Transactional
     public void updatePostMemberToUnknown(Long memberId) {
-
         Member unknownMember = memberRepository.findByUsername("unknown").get();
         postRepository.updateMemberToUnknownByMemberId(memberId, unknownMember);
     }
