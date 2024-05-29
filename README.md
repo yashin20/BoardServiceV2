@@ -54,6 +54,25 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
 
 ### 1-3. 개발 환경
 
+#### Back-end
+ - Java 21
+ - SpringBoot 3.2.4
+ - JPA(Spring Data JPA)
+ - Spring Security
+
+##### Build Tool
+ - Gradle 8.7
+
+##### DataBase
+ - MySQL 8.0.36
+
+#### Front-end
+ - html/css
+ - JavaScript
+ - Thymeleaf
+ - Bootstrap 5.3.2
+
+
 ### 1-4. 실행 화면
   <details>
     <summary>회원</summary>
@@ -73,7 +92,6 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
   </details>
 
 
-  
 
 
 ## 2. 프로젝트 구조
