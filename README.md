@@ -5,11 +5,32 @@
 
 ## 1. 프로젝트 소개
 
-### 1) 프로젝트 기능
+### 1) 프로젝트 소개
 
-### 2) 개발 환경 (사용 기술)
+### 2) 프로젝트 기능
 
-### 3) 실행 화면
+### 3) 개발 환경 (사용 기술)
+
+### 4) 실행 화면
+  <details>
+    <summary>회원</summary>
+    
+  </details>
+
+  
+  <details>
+    <summary>게시글</summary>
+    
+  </details>
+
+
+  <details>
+    <summary>댓글</summary>
+    
+  </details>
+
+
+  
 
 
 ## 2. 프로젝트 구조
