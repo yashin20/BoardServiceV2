@@ -1,6 +1,9 @@
 # SpringBoot-Project-Board Service
 
-![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/f5f42a21-c5fa-4e1c-97b9-e2d779193e1a)
+![메인화면](https://github.com/yashin20/BoardServiceV2/assets/92693776/f5f42a21-c5fa-4e1c-97b9-e2d779193e1a)
+
+## 목차
+ - [프로젝트 소개]
 
 
 ## 1. 프로젝트 소개
