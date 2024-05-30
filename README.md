@@ -79,9 +79,20 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
     <summary>게시글</summary>
     
    **1. 게시글 전체 목록**
-   
+
+   로그인 X 화면
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/5547af49-7724-4aeb-979f-7a6ad2590bdd)
+
+   로그인 O 화면
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/0871872a-720b-445f-bfe3-2055b252bd2e)
+
 
    **1-1. 게시글 전체 목록 정렬**
+
+   '조회수' 기준으로 내림차순 정렬
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/18250746-ccbb-4911-bcf1-f39d151f0f83)
+
+   ※ 로그인을 하지 않아도 게시글 정렬이 가능하다.
 
 
    **2. 게시글 등록 화면**
