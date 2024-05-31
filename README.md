@@ -1,4 +1,4 @@
-![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/060abce7-eefd-4b76-bf32-540f07f066e3)![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/def25023-bbe2-435a-9268-41fecc3e81ab)# SpringBoot-Project-Board Service
+# SpringBoot-Project-Board Service
 
 ![메인화면](https://github.com/yashin20/BoardServiceV2/assets/92693776/f5f42a21-c5fa-4e1c-97b9-e2d779193e1a)
 
