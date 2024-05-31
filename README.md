@@ -288,103 +288,86 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
 <summary>패키지 구조 보기</summary>
 
 ,,,
-\---src
-    +---main
-    |   +---java
-    |   |   \---project
-    |   |       \---boardserviceV2
-    |   |           |   BoardserviceV2Application.java
-    |   |           |
-    |   |           +---config
-    |   |           |       CustomAuthenticationFailureHandler.java
-    |   |           |       CustomUserDetailsService.java
-    |   |           |       WebSecurityConfig.java
-    |   |           |
-    |   |           +---controller
-    |   |           |       CommentApiController.java
-    |   |           |       HomeController.java
-    |   |           |       InitMember.java
-    |   |           |       MemberApiController.java
-    |   |           |       MemberController.java
-    |   |           |       PostApiController.java
-    |   |           |       PostController.java
-    |   |           |
-    |   |           +---dto
-    |   |           |       CommentRequestDto.java
-    |   |           |       CommentResponseDto.java
-    |   |           |       CreateMemberDto.java
-    |   |           |       CreatePostDto.java
-    |   |           |       LoginDto.java
-    |   |           |       MemberResponseDto.java
-    |   |           |       PostInfoDto.java
-    |   |           |       UpdateMemberDto.java
-    |   |           |       UpdatePostDto.java
-    |   |           |
-    |   |           +---entity
-    |   |           |       BaseEntity.java
-    |   |           |       Comment.java
-    |   |           |       Member.java
-    |   |           |       Post.java
-    |   |           |       UserRole.java
-    |   |           |
-    |   |           +---exception
-    |   |           |       DataAlreadyExistsException.java
-    |   |           |       DataNotFoundException.java
-    |   |           |       GlobalExceptionHandler.java
-    |   |           |       UnauthorizedAccessException.java
-    |   |           |
-    |   |           +---repository
-    |   |           |       CommentRepository.java
-    |   |           |       MemberRepository.java
-    |   |           |       PostRepository.java
-    |   |           |
-    |   |           \---service
-    |   |                   CommentService.java
-    |   |                   MemberService.java
-    |   |                   PostService.java
-    |   |
-    |   \---resources
-    |       |   application.yml
-    |       |
-    |       +---static
-    |       |       main.js
-    |       |       styles.css
-    |       |
-    |       \---templates
-    |           |   index.html
-    |           |
-    |           +---fragments
-    |           |       bodyFooter.html
-    |           |       bodyHeader.html
-    |           |       footer.html
-    |           |       header.html
-    |           |
-    |           +---member
-    |           |       createMember.html
-    |           |       login.html
-    |           |       memberInfo.html
-    |           |       updateMemberInfo.html
-    |           |
-    |           \---post
-    |                   createPost.html
-    |                   postInfo.html
-    |                   updatePost.html
-    |
-    \---test
-        \---java
-            \---project
-                \---boardserviceV2
-                    |   BoardserviceV2ApplicationTests.java
-                    |
-                    +---controller
-                    |       MemberApiControllerTest.java
-                    |
-                    +---repository
-                    |       MemberRepositoryTest.java
-                    |       PostRepositoryTest.java
-                    |
-                    \---service
-                            MemberServiceTest.java
+📦src
+ ┣ 📂main
+ ┃ ┣ 📂java
+ ┃ ┃ ┗ 📂project
+ ┃ ┃ ┃ ┗ 📂boardserviceV2
+ ┃ ┃ ┃ ┃ ┣ 📂config
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomAuthenticationFailureHandler.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomUserDetailsService.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜WebSecurityConfig.java
+ ┃ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentApiController.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜HomeController.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜InitMember.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberApiController.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberController.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostApiController.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostController.java
+ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentRequestDto.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentResponseDto.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateMemberDto.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreatePostDto.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginDto.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberResponseDto.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostInfoDto.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜UpdateMemberDto.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdatePostDto.java
+ ┃ ┃ ┃ ┃ ┣ 📂entity
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜BaseEntity.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜Comment.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜Member.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜Post.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRole.java
+ ┃ ┃ ┃ ┃ ┣ 📂exception
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜DataAlreadyExistsException.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜DataNotFoundException.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜GlobalExceptionHandler.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜UnauthorizedAccessException.java
+ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostRepository.java
+ ┃ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentService.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberService.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostService.java
+ ┃ ┃ ┃ ┃ ┗ 📜BoardserviceV2Application.java
+ ┃ ┗ 📂resources
+ ┃ ┃ ┣ 📂static
+ ┃ ┃ ┃ ┣ 📜main.js
+ ┃ ┃ ┃ ┗ 📜styles.css
+ ┃ ┃ ┣ 📂templates
+ ┃ ┃ ┃ ┣ 📂fragments
+ ┃ ┃ ┃ ┃ ┣ 📜bodyFooter.html
+ ┃ ┃ ┃ ┃ ┣ 📜bodyHeader.html
+ ┃ ┃ ┃ ┃ ┣ 📜footer.html
+ ┃ ┃ ┃ ┃ ┗ 📜header.html
+ ┃ ┃ ┃ ┣ 📂member
+ ┃ ┃ ┃ ┃ ┣ 📜createMember.html
+ ┃ ┃ ┃ ┃ ┣ 📜login.html
+ ┃ ┃ ┃ ┃ ┣ 📜memberInfo.html
+ ┃ ┃ ┃ ┃ ┗ 📜updateMemberInfo.html
+ ┃ ┃ ┃ ┣ 📂post
+ ┃ ┃ ┃ ┃ ┣ 📜createPost.html
+ ┃ ┃ ┃ ┃ ┣ 📜postInfo.html
+ ┃ ┃ ┃ ┃ ┗ 📜updatePost.html
+ ┃ ┃ ┃ ┗ 📜index.html
+ ┃ ┃ ┗ 📜application.yml
+ ┗ 📂test
+ ┃ ┗ 📂java
+ ┃ ┃ ┗ 📂project
+ ┃ ┃ ┃ ┗ 📂boardserviceV2
+ ┃ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜MemberApiControllerTest.java
+ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberRepositoryTest.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostRepositoryTest.java
+ ┃ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜MemberServiceTest.java
+ ┃ ┃ ┃ ┃ ┗ 📜BoardserviceV2ApplicationTests.java
 ,,,
 
 </details>
