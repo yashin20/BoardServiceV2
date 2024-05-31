@@ -32,6 +32,7 @@
 Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포함하고 있어 웹 서비스의 기본 원리를 학습하는 데 매우 적합하다고 생각했습니다.  
 이 프로젝트를 통해 서버-클라이언트 구조, 데이터베이스 연동, RESTful API 설계 등 웹 애플리케이션의 핵심 개념을 실습할 수 있었습니다.  
 
+
 ### 1-2. 프로젝트 기능
 
 게시판 서비스의 주요 기능은 다음과 같습니다.
@@ -87,6 +88,7 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
    ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/0871872a-720b-445f-bfe3-2055b252bd2e)
 
 
+
    **1-1. 게시글 전체 목록 정렬**
 
    '조회수' 기준으로 내림차순 정렬
@@ -95,11 +97,13 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
    ※ 로그인을 하지 않아도 게시글 정렬이 가능하다.
 
 
+
    **2. 게시글 등록 화면**
 
    ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/67099714-c576-4029-8b68-552aa2a8ef5e)
 
    로그인한 사용자만 게시글 작성이 가능하며, 작성 후 '게시' 버튼을 누르면 메인 페이지로 리다이렉트 된다.
+
    
 
    **3. 게시글 상세 정보**
@@ -122,20 +126,59 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
    ※ 작성자 계정으로 로그인 한 경우, '게시글 수정' 과 '게시글 삭제' 를 할 수 있다.
 
 
+
    **4. 게시글 수정 화면**
+
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/2ecc1243-4c45-4f2f-9b42-4af5f6e7e914)
+
+   게시글 수정 후, '게시' 버튼을 눌러 수정을 마무리한다.  
+   '게시' 버튼을 누르면 게시글 목록으로 이동한다.
+
+   [수정된 게시글 화면]
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/c828dff6-270e-4b36-a597-85969a196c0c)
+   
    
 
    **5. 게시글 삭제 화면**
 
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/816ef173-4759-4456-b8b5-1ad39da2f7bb)
+
+   '게시글 삭제' 버튼을 눌러 삭제를 진행한다.
+
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/08081d6f-d02c-4c06-9a42-d1c9d963d53d)
+
+   '게시글 번호'를 포함한 삭제 완료 안내 메시지가 등장한다.
+
+   [게시글 목록]
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/440f7a24-f7f1-4178-b6da-94319eda0f34)
+
+   게시글이 삭제 된 것을 볼 수 있다.
+
 
    **6. 게시글 검색 화면**
+
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/6b0fdefb-da6a-4dc7-9220-14c441fbb801)
+
 
 
   **6-1. 게시글 검색 후 페이징 화면**
 
+  ['by' 키워드로 검색한 화면]
+  ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/bbd81c39-1be6-45da-a29c-a9431b2a07ca)
+
+  ['by' 키워드로 검색 내용 中 사용자 기준 4페이지]
+  ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/c56913a8-1e71-4927-a828-27cf637fc195)
+
+
 
   **6-2. 게시글 검색 후 페이징 + 정렬**
-   
+
+  ['by' 키워드로 검색 내용 && 조회수 기준 내림차순 정렬]
+  ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/79fef79f-8ff0-4c39-99ac-2677d557079b)
+
+
+  ['by' 키워드로 검색 내용 && 조회수 기준 내림차순 정렬 中 사용자 기준 1페이지]
+  ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/d346d15f-fe23-401e-a321-e79a19fa6537)   
     
   </details>
 
