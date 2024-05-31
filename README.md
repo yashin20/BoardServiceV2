@@ -287,7 +287,7 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
 
 <summary>패키지 구조 보기</summary>
 
-,,,
+'''
 📦src
  ┣ 📂main
  ┃ ┣ 📂java
@@ -368,7 +368,7 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
  ┃ ┃ ┃ ┃ ┣ 📂service
  ┃ ┃ ┃ ┃ ┃ ┗ 📜MemberServiceTest.java
  ┃ ┃ ┃ ┃ ┗ 📜BoardserviceV2ApplicationTests.java
-,,,
+'''
 
 </details>
 
