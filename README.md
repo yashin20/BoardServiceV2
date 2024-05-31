@@ -188,13 +188,45 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
 
    **1. 회원가입 화면**
 
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/fe32e1bc-cfeb-4c2b-9bc2-7ac7a2af3fea)
+
+
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/f7f03b03-c0d4-4526-a495-2cdcb6e0ff46)
+
+   ※ 회원가입 양식에 대한 경고 메시지 표시
+
+
 
    **2. 로그인 화면**
+
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/70aeecdb-783d-4469-b23a-b1b814896db5)
+
+   ※ 로그인 실패에 대한 경고 메시지 표
+
 
 
    **3. 회원정보 수정 화면**
 
-   
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/49fd5a13-5ff2-4ee5-96b1-8fef64824af3)
+   로그인 된 username 을 입력하여, 회원정보 화면으로 이동
+
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/1ffe8588-1a0d-4b49-8bb8-15a53608835e)
+
+  
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/db057e23-35ee-4f4b-afcb-333b7dcc2956)
+   변경하려는 닉네임에 대한 중복 체크  
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/8e879869-e2e9-4503-8ff2-80213486f736)
+   변경하려는 비밀번호에 대한 유효성 체크  
+
+
+
+   **4. 회원 탈퇴**
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/86e4f872-27d0-4d94-a470-5e5ad86565dd)
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/109b6351-9b3c-4f57-a1eb-26bc5373da76)
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/e0a6d5a1-82f8-41b2-bbde-ae1eeaeb9f09)
+   회원 탈퇴 처리 후, 메인 페이지로 리다이렉션, 로그아웃 처리가 된다.  
+   또한, 탈퇴한 회원이 작성한 게시글 / 댓글의 작성자는 'unknown' 으로 표기된다.
+
     
   </details>
 
