@@ -97,15 +97,29 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
 
    **2. 게시글 등록 화면**
 
-   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/27157219-5242-4f6d-9e6b-e7fa93085d2f)
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/67099714-c576-4029-8b68-552aa2a8ef5e)
 
    로그인한 사용자만 게시글 작성이 가능하며, 작성 후 '게시' 버튼을 누르면 메인 페이지로 리다이렉트 된다.
    
 
    **3. 게시글 상세 정보**
 
-   
+   로그인 X
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/92b77621-66c2-4a46-83e7-e13552424ae3)
 
+   ※ 로그인 하지 않은 경우, 게시글 상세 정보에 접근 가능하지만, '게시글 설정' 옵션에 접근할 수 없다.
+
+
+   작성자 계정이 아닌 다른 계정으로 로그인 O
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/bef81a23-7918-4817-a5b6-b0dc5515f885)
+
+   ※ 작성자 계정이 아닌 다른 계정으로 로그인한 경우, '게시글 설정' 옵션에 접근 가능하지만, '게시글 작성' 기능만 접근 가능하다.
+
+
+   작성자 계정으로 로그인 O
+   ![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/15f21e93-5271-447d-b708-f7aa6e0feff0)
+
+   ※ 작성자 계정으로 로그인 한 경우, '게시글 수정' 과 '게시글 삭제' 를 할 수 있다.
 
 
    **4. 게시글 수정 화면**
