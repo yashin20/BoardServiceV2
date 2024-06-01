@@ -392,6 +392,16 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
 
 ### 2-3. API 설계
 
+**Post 관련 API**
+![image](https://github.com/yashin20/BoardServiceV2/assets/92693776/04184267-86fe-41fd-af99-a6772c85633a)  
+  
+**Member 관련 API**
+  
+  
+**Comment 관련 API**
+
+
+
 
 ## 개발 내용
 
