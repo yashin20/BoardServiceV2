@@ -8,9 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.boardserviceV2.dto.CreatePostDto;
-import project.boardserviceV2.dto.PostInfoDto;
-import project.boardserviceV2.dto.UpdatePostDto;
+import project.boardserviceV2.dto.*;
 import project.boardserviceV2.entity.Member;
 import project.boardserviceV2.entity.Post;
 import project.boardserviceV2.exception.DataNotFoundException;
@@ -31,16 +29,18 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
 
+
     /**
      * 게시글 생성
      */
     @Transactional
-    public Post createPost(CreatePostDto createPostDto, Member member) {
-        Post post = new Post(createPostDto.getTitle(), createPostDto.getContent(), member);
+    public Post createPost(PostRequestDto dto) {
+        Post post = new Post(dto.getTitle(), dto.getContent(), dto.getMember());
         postRepository.save(post);
 
         return post;
     }
+
 
     /**
      * 게시글 목록
@@ -48,8 +48,6 @@ public class PostService {
     public Page<Post> pageList(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
-
-
 
 
     /**
@@ -84,18 +82,19 @@ public class PostService {
         return new PostInfoDto(post);
     }
 
+
     /**
      * 게시글 수정
      */
     @Transactional
-    public Post updatePost(Long postId, UpdatePostDto updatePostDto) {
-        Optional<Post> findPost = postRepository.findById(postId);
+    public Post updatePost(PostRequestDto dto) {
+        Optional<Post> findPost = postRepository.findById(dto.getId());
         if (!findPost.isPresent()) {
             throw new DataNotFoundException("존재하지 않는 게시글 입니다.");
         }
-
         Post post = findPost.get();
-        post.update(updatePostDto.getTitle(), updatePostDto.getContent());
+
+        post.update(dto.getTitle(), dto.getContent());
         return post;
     }
 

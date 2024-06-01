@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Header Fragment</title>
@@ -8,35 +7,10 @@
 </head>
 <body>
     <header th:fragment="header">
-        <nav class="navbar bg-light">
+        <nav class="navbar bg-dark text-white">
             <div class="container-fluid">
 
-                <a class="navbar-brand" th:href="@{/}"> Board Service </a>
-
-                <!--로그인 O-->
-                <div sec:authorize="isAuthenticated()">
-                    <span class="navbar-text" id="member-message">
-                        Welcome, <a th:href="@{/member/private/userInfo}" sec:authentication="name">User</a>!
-                    </span>
-
-<!--                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/member/private/userInfo}"> User Info </a>-->
-
-                    <!--LogOut Post 요청 Form-->
-                    <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none"></form>
-                    <a class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
-                </div>
-
-                <!--로그인 X-->
-                <div sec:authorize="isAnonymous()">
-                    <span class="navbar-text" id="guest-message">
-                        Hello, <span>Guest</span>!
-                    </span>
-                    <form>
-                        <a class="btn btn-sm btn-outline-secondary" th:href="@{/member/login}"> Login </a>
-                        <a class="btn btn-sm btn-outline-secondary" th:href="@{/member/new}"> Sign In </a>
-                    </form>
-                </div>
-
+                <a class="navbar-brand text-white" th:href="@{/}"> Board Service </a>
 
                 <!--검색 폼-->
                 <form th:action="@{/}" method="get" class="d-flex" role="search">

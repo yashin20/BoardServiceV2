@@ -76,12 +76,12 @@ public class PostController {
      */
     @GetMapping("/new")
     public String getCreatePostForm(Model model) {
-        model.addAttribute("createPostDto", new CreatePostDto());
+        model.addAttribute("postRequestDto", new PostRequestDto());
         return "post/createPost";
     }
 
     @PostMapping("/new")
-    public String createPost(@Valid @ModelAttribute CreatePostDto createPostDto, BindingResult bindingResult,
+    public String createPost(@Valid @ModelAttribute PostRequestDto dto, BindingResult bindingResult,
                              Model model, Authentication authentication) {
         //유효성 검사 오류 시, 에러 처리 로직
         if (bindingResult.hasErrors()) {
@@ -97,7 +97,9 @@ public class PostController {
         String loginName = authentication.getName();
         Member member = memberService.findMemberByUsername(loginName);
 
-        postService.createPost(createPostDto, member);
+        dto.setMember(member);
+
+        postService.createPost(dto);
 
         return "redirect:/";
     }
@@ -117,14 +119,14 @@ public class PostController {
         }
 
         //기존 내용 입력하기
-        UpdatePostDto updatePostDto = new UpdatePostDto(post.getTitle(), post.getContent());
+        PostRequestDto postRequestDto = new PostRequestDto(postId, post.getTitle(), post.getContent());
 
-        model.addAttribute("updatePostDto", updatePostDto);
+        model.addAttribute("updatePostDto", postRequestDto);
         return "post/updatePost";
     }
 
     @PostMapping("/{postId}/update")
-    public String updatePost(@PathVariable Long postId, @Valid @ModelAttribute UpdatePostDto updatePostDto,
+    public String updatePost(@PathVariable Long postId, @Valid @ModelAttribute PostRequestDto dto,
                              BindingResult bindingResult, Model model) {
 
         //*예외처리 : UpdatePostDto 조건 만족
@@ -137,7 +139,8 @@ public class PostController {
             return "post/updatePost";
         }
 
-        postService.updatePost(postId, updatePostDto);
+        dto.setId(postId);
+        postService.updatePost(dto);
         return "redirect:/";
     }
 
@@ -150,83 +153,4 @@ public class PostController {
         postService.deletePost(postId);
         return "redirect:/";
     }
-
-
-    /**
-     * ===============================================
-     * 페이징 테스트
-     */
-    @GetMapping("/paging-test") /* size = 10(default), page = 0(default) */
-    public String pagingTest(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable, Model model) {
-        Page<Post> list = postService.pageList(pageable);
-
-        model.addAttribute("posts", list);
-        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber()); //이전 페이지 번호
-        model.addAttribute("next", pageable.next().getPageNumber()); //다음 페이지 번호
-        model.addAttribute("hasNext", list.hasNext()); //다음 페이지 존재 여부
-        model.addAttribute("hasPrevious", list.hasPrevious()); //이전 페이지 존재 여부
-
-        //현재 페이지 정보 (사용자 기준으로 넘겨줌)
-        int currentPage = pageable.getPageNumber() + 1;
-        model.addAttribute("current", currentPage);
-
-        /** 페이지 블록 계산
-         * currentPage = 5
-         * User : 5 , Spring : 4
-         * startPage = 1
-         * endPage = 5
-         * <= 1 2 3 4 5 =>
-         */
-
-        int blockSize = 5;
-        int startPage = ((currentPage - 1) / blockSize) * blockSize + 1; //블럭의 시작 페이지
-        int endPage = Math.min(startPage + blockSize - 1, list.getTotalPages()); //블럭의 마지막 페이지
-
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-
-        return "test/pagingTestPage";
-    }
-    /**
-     *
-     =================================================*/
-
-
-    /**
-     * 게시글 키워드 검색
-     *//*
-    @GetMapping("/search")
-    public String search(@RequestParam("keyword") String keyword, Model model,
-                         @PageableDefault(sort = "id", direction = Sort.Direction.ASC)Pageable pageable) {
-        Page<Post> searchList = postService.search(keyword, pageable);
-        Page<PostInfoDto> posts = searchList.map(PostInfoDto::new);
-
-        model.addAttribute("posts", posts);
-        model.addAttribute("keyword", keyword); //검색 키워드
-        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber()); //이전 페이지 정보
-        model.addAttribute("next", pageable.next().getPageNumber()); //다음 페이지 정보
-        model.addAttribute("hasPrevious", searchList.hasPrevious()); //이전 페이지 존재 여부
-        model.addAttribute("hasNext", searchList.hasNext()); //다음 페이지 존재 여부
-
-
-        *//** 페이지 블록 계산
-         * currentPage = 5
-         * User : 5 , Spring : 4
-         * startPage = 1
-         * endPage = 5
-         * <= 1 2 3 4 5 =>
-         *//*
-        int currentPage = pageable.getPageNumber() + 1; //현재 페이지 정보(User side)
-        model.addAttribute("current", currentPage);
-
-        int blockSize = 5;
-        int startPage = ((currentPage - 1) / blockSize) * blockSize + 1; //블럭 시작 페이지
-        int endPage = Math.min(startPage + blockSize - 1, searchList.getTotalPages()); //블럭 마지막 페이지
-
-
-        model.addAttribute("startPage", startPage); //페이지 블럭 시작 페이지
-        model.addAttribute("endPage", endPage); //페이지 블럭 마지막 페이지
-
-        return "post/search";
-    }*/
 }

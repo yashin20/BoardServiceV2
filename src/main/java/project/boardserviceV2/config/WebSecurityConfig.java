@@ -54,9 +54,8 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
+                                .requestMatchers("/post/new").authenticated() //post 작성 - 로그인
                                 .requestMatchers("/", "/member/login", "/member/new", "/post/**").permitAll()
-                                .requestMatchers("/member/private/**").authenticated()
-                                .requestMatchers("/api/comments/**").authenticated()
                                 .anyRequest().authenticated()
                 )
                 .formLogin((form) ->
