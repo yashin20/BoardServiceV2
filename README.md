@@ -408,7 +408,7 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
 
 - <a href="https://notorious.tistory.com/340" target="_blank">게시글 페이징 처리 구현</a>
 - <a href="https://notorious.tistory.com/341" target="_blank">게시글 키워드 검색 + 정렬 + 페이징 기능 구현</a>
-- <a href="https://notorious.tistory.com/340" target="_blank">게시글 페이징 처리 구현</a>
+- <a href="https://notorious.tistory.com/342" target="_blank">회원 탈퇴시, 게시글 / 댓글 처리</a>
 
 ## 마치며
 
