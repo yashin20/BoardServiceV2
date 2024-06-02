@@ -413,5 +413,10 @@ Spring Boot를 이용한 게시판 서비스는 기본적인 CRUD 기능을 포�
 ## 마치며
 
 ### 1. 프로젝트 보완사항
+
+
 ### 2. 프로젝트 과정에서 발생한 문제
+- <a href="https://notorious.tistory.com/339" target="_blank">Spring Security 가 비로그인 상태에서 static rescoure 접근을 제한</a>
+
+
 ### 3. 후기
