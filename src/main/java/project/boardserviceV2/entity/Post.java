@@ -67,4 +67,17 @@ public class Post extends BaseEntity{
     public void incrementView() {
         this.view += 1;
     }
+
+
+    //Test Data 생성
+    public Post(String title, String content, Integer view, Member member, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.title = title;
+        this.content = content;
+        this.view = view;
+        this.member = member;
+        this.setCreatedAt(createdAt);
+        this.setUpdatedAt(updatedAt);
+    }
+
+
 }

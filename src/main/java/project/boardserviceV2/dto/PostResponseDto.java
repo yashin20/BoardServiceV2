@@ -15,13 +15,13 @@ public class PostResponseDto {
 
     /**
      * Post 응답 DTO
-     *
+     * <p>
      * 등록 요청 - return : id
-     *
-     * 조회 요청 - return : id, title, content, createdAt, updatedAt, member
-     *
-     * 수정 요청 - return : id, title, content, createdAt, updatedAt, member
-     *
+     * <p>
+     * 조회 요청 - return : id, title, content, createdAt, updatedAt, view, memberNickname, memberUsername
+     * <p>
+     * 수정 요청 - return : id, title, content, createdAt, updatedAt, view, memberNickname, memberUsername
+     * <p>
      * 삭제 요청 - return : id
      */
 
@@ -30,7 +30,9 @@ public class PostResponseDto {
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private String member;
+    private Integer view;
+    private String memberNickname;
+    private String memberUsername;
 
     private String message; //예외 처리 메시지
 
@@ -48,7 +50,9 @@ public class PostResponseDto {
         this.content = entity.getContent();
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();
-        this.member = entity.getMember().getNickname();
+        this.view = entity.getView();
+        this.memberNickname = entity.getMember().getNickname();
+        this.memberUsername = entity.getMember().getUsername();
     }
 
     // 오류 메시지용 생성자

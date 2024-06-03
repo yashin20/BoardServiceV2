@@ -31,31 +31,24 @@ public class WebSecurityConfig {
     }
 
 
-/*
-    // password 아무런 암호화도 걸지 않음.
-    @Bean
-    public static PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
-*/
-
     // WebSecurityCustomizer Bean 등록 - 정적 resources 접근을 위함
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         // 정적 리소스가 위치한 파일의 보안 처리를 무시 (누구든 접근 가능)
         return (web -> web.ignoring()
+                .requestMatchers("/styles.css")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()));
     }
 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // 요청되는 모든 URL 요청을 허용
+
         http
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
                                 .requestMatchers("/post/new").authenticated() //post 작성 - 로그인
-                                .requestMatchers("/", "/member/login", "/member/new", "/post/**").permitAll()
+                                .requestMatchers("/", "/member/login", "/member/new", "/post/**", "/paging-test").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin((form) ->

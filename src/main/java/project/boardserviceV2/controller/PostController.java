@@ -72,7 +72,7 @@ public class PostController {
 
 
     /**
-     * 게시글 작성
+     * 게시글 등록
      */
     @GetMapping("/new")
     public String getCreatePostForm(Model model) {
@@ -129,7 +129,7 @@ public class PostController {
     public String updatePost(@PathVariable Long postId, @Valid @ModelAttribute PostRequestDto dto,
                              BindingResult bindingResult, Model model) {
 
-        //*예외처리 : UpdatePostDto 조건 만족
+        //*예외처리 : PostRequestDto 조건 만족
         if (bindingResult.hasErrors()) {
             //에러 메시지 반환
             List<String> errorMessage = bindingResult.getAllErrors().stream()

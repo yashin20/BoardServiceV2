@@ -10,6 +10,14 @@ public class CommentResponseDto {
 
     /**
      * Comment 응답 DTO
+     * <p>
+     * 등록 요청 - return : id
+     * <p>
+     * 조회 요청 - return : id, content, createdAt, updatedAt, post, member
+     * <p>
+     * 수정 요청 - return : id, content, createdAt, updatedAt, post, member
+     * <p>
+     * 삭제 요청 - return : id
      */
 
     private Long id;

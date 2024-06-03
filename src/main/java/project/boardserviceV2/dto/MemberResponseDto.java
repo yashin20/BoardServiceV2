@@ -22,17 +22,14 @@ public class MemberResponseDto {
      */
 
     private Long id;
-
     private String username;
     private String email;
     private String nickname;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    //pfp
 
     //Entity -> DTO
-
     public MemberResponseDto(Member entity) {
         this.id = entity.getId();
         this.username = entity.getUsername();

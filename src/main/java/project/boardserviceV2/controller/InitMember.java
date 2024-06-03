@@ -75,6 +75,25 @@ public class InitMember {
 
             Member member1 = new Member("Member77", passwordEncoder.encode("12345678"), "Mem77", "exam@exam.com");
             em.persist(member1);
+
+
+            //검색 페이징을 위해 넣은 테스트 데이터
+            for (int i = 1; i <= 20; i++) {
+                int flag = i % 3;
+                if (flag == 0) {
+                    em.persist(new Post("Apple" + i, "Apple Content",(i + 1) * 70 ,member1,
+                            LocalDateTime.of(2024, (i%11 + 1), i, 20, 20),
+                            LocalDateTime.now()));
+                } else if (flag == 1) {
+                    em.persist(new Post("Banana" + i, "Banana Content",(i + 1) * 70, member1,
+                            LocalDateTime.of(2024, (i%11 + 1), i, 20, 20),
+                            LocalDateTime.now()));
+                } else {
+                    em.persist(new Post("AppBana" + i, "AppBana Content",(i + 1) * 70, member1,
+                            LocalDateTime.of(2024, (i%11 + 1), i, 20, 20),
+                            LocalDateTime.now()));
+                }
+            }
         }
     }
 }

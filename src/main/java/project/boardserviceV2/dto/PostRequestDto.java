@@ -15,13 +15,13 @@ public class PostRequestDto {
 
     /**
      * Post 요청 DTO
-     *
+     * <p>
      * 등록 요청 : title, content, member
-     *
+     * <p>
      * 조회 요청 : id
-     *
+     * <p>
      * 수정 요청 : id, title, content
-     *
+     * <p>
      * 삭제 요청 : id
      */
 

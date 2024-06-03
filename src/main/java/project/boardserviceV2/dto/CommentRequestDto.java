@@ -17,6 +17,14 @@ public class CommentRequestDto {
 
     /**
      * Comment 작성 DTO
+     * <p>
+     * 등록 요청 : content, member, post
+     * <p>
+     * 조회 요청 : id
+     * <p>
+     * 수정 요청 : id, content
+     * <p>
+     * 삭제 요청 : id
      */
     private Long id;
     private String content;
